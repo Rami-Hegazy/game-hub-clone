@@ -1,16 +1,27 @@
-import { Card, Heading, Image, CardBody, HStack } from "@chakra-ui/react";
+import {
+  Card,
+  Heading,
+  Image,
+  CardBody,
+  HStack,
+  Button,
+} from "@chakra-ui/react";
 import { Game } from "../hooks/useGames";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
 import getCroppedImageUrl from "../services/image-url";
+import getGameWebsite from "../services/get-game";
 
 interface Props {
   game: Game;
 }
 
 const GameCard = ({ game }: Props) => {
+  const handleClick = () => {
+    getGameWebsite(game.id);
+  };
   return (
-    <Card  padding={4}>
+    <Card padding={4}>
       <Image src={getCroppedImageUrl(game.background_image)} alt={game.name} />
       <CardBody padding={4}>
         <Heading fontSize={"2xl"}>{game.name}</Heading>
@@ -20,6 +31,7 @@ const GameCard = ({ game }: Props) => {
           />
           <CriticScore score={game.metacritic} />
         </HStack>
+        <Button onClick={handleClick}>Website</Button>
       </CardBody>
     </Card>
   );

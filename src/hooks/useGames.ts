@@ -13,7 +13,7 @@ export interface Game {
   name: string;
   background_image: string;
   parent_platforms: { platform: Platform }[];
-  stores: { store: { id: number; name: string; slug: string } }[];
+  website?: string;
 }
 
 const useGames = () => useData<Game>("/games");
