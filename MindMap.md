@@ -40,10 +40,23 @@
  - Peak at the file
 
  - <PlatformSelector> component
-  - we made an state hook of type <Genre | null> in the <App> for sharing the 
+  - we made an state hook of type <Genre | null> in the <App> for sharing the status
   - made Props in <GenreList> of onSelectGenre:(genre: Genre) => void for the onClick button
   - pass the prop to the app component (genre) => setSelctedGenre(genre)
   - made an interface selctedGenre: Genre | null  in the <GameGrid> to pass to the useGames when fetching the games
   - made our useData Hook more flexible by adding  requestConfig? and deps?:any[] and conditional updating in the [] 
   -pass the needed stuff to our useGame 
   -peak at file
+
+ - Filter by Platform
+  - we made an state hook of type <Platform | null> in the <App> for sharing the stauts
+  - made Props in <PlatformList> of onSelectPlatform:(platform:Platform) => void for the onClick button we made onClick button () => onSelectPlatform(platform)
+  - Pass the platform in the <App> onSelectPlatform{(platform) => setSelectedPlatform(platform)}
+  - Pass the selectedPlatform to the <GameGrid> in <App> after defining the prop in the <GameGrid>
+  - Add the selectedPlatform as a second argument in the useGame in the <GameGrid>
+  - Make changes to useGame.ts 
+   - pass another property to the params{}
+    - platforms: selectedPlatform?.id
+   -update the depencies array
+    - [selectedGenre?.id, selectedPlatform?.id]
+
