@@ -28,7 +28,7 @@
 - <GenreList>
   - import useGenere from "../hooks/useGenres";
   - const { data } = useGenere(); "in the body"
-  - map the data to a ul
+  - map the data to a <List> Component
 
 - Created <GameGrid> 
  - const { data, error, isLoading } = useGames();
@@ -39,4 +39,11 @@
  - conditional renderting to the skeletons if loading , mapping the data to render games
  - Peak at the file
 
- - 
+ - <PlatformSelector> component
+  - we made an state hook of type <Genre | null> in the <App> for sharing the 
+  - made Props in <GenreList> of onSelectGenre:(genre: Genre) => void for the onClick button
+  - pass the prop to the app component (genre) => setSelctedGenre(genre)
+  - made an interface selctedGenre: Genre | null  in the <GameGrid> to pass to the useGames when fetching the games
+  - made our useData Hook more flexible by adding  requestConfig? and deps?:any[] and conditional updating in the [] 
+  -pass the needed stuff to our useGame 
+  -peak at file
