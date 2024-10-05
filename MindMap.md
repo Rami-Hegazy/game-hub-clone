@@ -11,31 +11,37 @@
 - Create a generic <useData> to fetch the data
  - <useData.ts> effect hook with all of:
     - generic [data] [error] [isLoading] , interface FetchResponse<T> , 
-        interface <T>(endpoint : string) , apiClient.get('endpoint',{signal: controller.signal}) , setData(res.data.results) , setLoading('true') , controller with AbortController catch error insatceof Canceled ,
-        return { data, error, isLoading } 
+        - interface <T>(endpoint : string, requestConfig?: AxiosRequestConfig, deps?: any[] ), 
+        - apiClient.get('endpoint',{signal: controller.signal, ...requestConfig}) , 
+        - setData(res.data.results) , setLoading('false') 
+        - controller with AbortController catch error insatceof Canceled ,
+        - , deps ? [...deps] : []
+        - return { data, error, isLoading } 
     -Peak at the file
 - Create <useGenres.ts> , <useGames.ts> , export required interfaces.
     -<useGenres.ts> 
         - import <useData.ts>
         - export interface Genre
-        - id: number , name: string
-    - <useGenere> = () => useData<Genre>("genres")
-        -<useGames.ts>
+        - id: number , name: string , image_background
+        - <useGenere> = () => useData<Genre>("genres")
+    -<useGames.ts>
         - import useData from "./useData";
-        - export interface Platform {id: number;name: string;slug: string;metacritic: number;}
-        - export interface Game {metacritic: number;id: number;name: string;background_image: string; parent_platforms: { platform: Platform }[];}
-        - <useGames> = () => useData<Game>("games")
+        - export interface Platform {id: number;name: string;slug: string;metacritic?: number;}
+        - export interface Game {metacritic: number;id: number;name: string;background_image: string; parent_platforms: { platform: Platform }[]; website?: string;}
+        -const useGames = (gameQuery: GameQuery) => useData<Game>("/games",{params: {genres: gameQuery.genre?.id,platform: gameQuery.platform?.id,},},[gameQuery]);
+        -Peak at the file
 - <GenreList>
   - import useGenere from "../hooks/useGenres";
-  - const { data } = useGenere(); "in the body"
+  - const { data, isLoading, error} = useGenere(); "in the body"
   - map the data to a <List> Component
 
 - Created <GameGrid> 
- - const { data, error, isLoading } = useGames();
+ - interface Props {gameQuery: GameQuery;}
+ - const { data, error, isLoading } = useGames(gameQuery);
    const skeletons = [1, 2, 3, 4, 5, 6];
+ - {error && <Text>{error}</Text>}
  - <SimpleGrid> "view unlimeted cards"
  - padding='10px' spacing='10px' coulumns= {sm:..,md:.. , lg:..} "view unlimeted cards"
- - {error && <Text>{error}</Text>}
  - conditional renderting to the skeletons if loading , mapping the data to render games
  - Peak at the file
 
@@ -50,7 +56,7 @@
 
  - Filter by Platform
   - we made an state hook of type <Platform | null> in the <App> for sharing the stauts
-  - made Props in <PlatformList> of onSelectPlatform:(platform:Platform) => void for the onClick button we made onClick button () => onSelectPlatform(platform)
+  - made Props in <PlatformIconList> of onSelectPlatform:(platform:Platform) => void for the onClick button we made onClick button () => onSelectPlatform(platform)
   - Pass the platform in the <App> onSelectPlatform{(platform) => setSelectedPlatform(platform)}
   - Pass the selectedPlatform to the <GameGrid> in <App> after defining the prop in the <GameGrid>
   - Add the selectedPlatform as a second argument in the useGame in the <GameGrid>
@@ -60,3 +66,14 @@
    -update the depencies array
     - [selectedGenre?.id, selectedPlatform?.id]
 
+- Refactor: Extract a Query object
+ -Changes in the <App>
+  - export interface GameQuery {genre: Genre | null;platform: Platform | null;}
+  - const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+  - update the selectedGenere and selectedPlatform with gameQuery: GameQuery in every file
+  - update the onselectedGenere with setGameQuery({ ...gameQuery, genre }) in <App>
+  - update <useGames> to have const useGames = (gameQuery: GameQuery) 
+  - update <useGames> to have gameQuery.genre? and gameQuery.platform? 
+  - deps array = [gameQuery]
+  - set gameQuery={gameQuery} and get rid of selectedGenre in <App>
+  
