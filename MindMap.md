@@ -77,3 +77,24 @@
   - deps array = [gameQuery]
   - set gameQuery={gameQuery} and get rid of selectedGenre in <App>
   
+- Made <SortSelector> similar to <PlatformSelector>
+
+-  Added sortOrder list object and map it to have value and key
+- set on click to a prop  and define 
+-- interface Props {onSelectSortOrder: (sortOrder: string) => void;}
+-- set onClick to 
+              onClick={() => onSelectSortOrder(order.value)}
+- update <App>  add   sortOrder: string; GameQuery interface
+--          onSelectSortOrder={(sortOrder) =>setGameQuery({ ...gameQuery, sortOrder })}
+- update <useGames> params to have:
+        ordering: gameQuery.sortOrder
+- create a sortOrder prop in the <SortSelector>:  sortOrder: string;
+- pass it to the <App> : sortOrder={gameQuery.sortOrder}
+- make a const of the current sortOrder
+ const currentSortOrder = sortOrders.find((order) => order.value === sortOrder);
+- Change the label to:
+        Order by : {currentSortOrder?.label || "Relevance"}
+
+
+
+
