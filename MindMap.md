@@ -90,7 +90,8 @@
         ordering: gameQuery.sortOrder
 - create a sortOrder prop in the <SortSelector>:  sortOrder: string;
 - pass it to the <App> : sortOrder={gameQuery.sortOrder}
-- make a const of the current sortOrder
+- 
+- make a const of the current sortOrder 
  const currentSortOrder = sortOrders.find((order) => order.value === sortOrder);
 - Change the label to:
         Order by : {currentSortOrder?.label || "Relevance"}

@@ -25,15 +25,17 @@ const SortSelector = ({ onSelectSortOrder, sortOrder }: Props) => {
       <MenuButton as={Button} rightIcon={<BsChevronDoubleDown />}>
         Order by : {currentSortOrder?.label || "Relevance"}
       </MenuButton>
-      {sortOrders.map((order) => (
-        <MenuItem
-          onClick={() => onSelectSortOrder(order.value)}
-          key={order.value}
-          value={order.value}
-        >
-          {order.label}
-        </MenuItem>
-      ))}
+      <MenuList>
+        {sortOrders.map((order) => (
+          <MenuItem
+            onClick={() => onSelectSortOrder(order.value)}
+            key={order.value}
+            value={order.value}
+          >
+            {order.label}
+          </MenuItem>
+        ))}
+      </MenuList>
     </Menu>
   );
 };
