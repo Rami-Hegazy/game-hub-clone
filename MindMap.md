@@ -97,6 +97,9 @@
         Order by : {currentSortOrder?.label || "Relevance"}
 
 - created <SearchInput> component add to <NavBar> and made nowrap for the text
+- removed justifyContent={"space-between"} from <NavBar>
+
+
 
 
 
