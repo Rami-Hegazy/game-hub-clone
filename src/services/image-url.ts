@@ -9,3 +9,15 @@ const getCroppedImageUrl = (url: string) => {
 };
 
 export default getCroppedImageUrl;
+
+// www.whatthefuck/media/image.com
+// target = media/
+
+
+// www.whatthefuck/ media/ image.com
+
+
+// index =  www.whatthefuck/ + media/ 
+
+// return =  www.whatthefuckmedia/ + crop/600/400/ + image.com
+// url.slice "0 --> www.whatthefuck/media/crop/600/400/image.com"
