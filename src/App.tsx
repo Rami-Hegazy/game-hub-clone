@@ -31,7 +31,7 @@ const App = () => {
         <GridItem area="nav">
           <NavBar
             onSearch={(searchText) =>
-              setGameQuery({ ...gameQuery, searchText })
+              setGameQuery({ ...gameQuery, searchText: searchText })
             }
           />
         </GridItem>
